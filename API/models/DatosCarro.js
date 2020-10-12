@@ -19,6 +19,10 @@ const datosCarro = new esquema({
     anguloGiro: {
         type: Number,
         trim: true
+    },
+    entradaVelocidad: {
+        type: Number,
+        trim: true
     }
 
 });
