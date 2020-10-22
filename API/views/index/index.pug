@@ -13,7 +13,7 @@ head
     font-size: 2.5rem;
     text-align: center;
     }
-h2 CARRO TRACCIÓN DIFERENCIAL
+h2 ROBOT TRACCIÓN DIFERENCIAL
 #chart-velocidad_lineal.container
 #chart-posicion.container
 script.
@@ -55,7 +55,7 @@ script.
   };
   xhttp.open("GET", "/datos/5f84ecaebaa34d00173d845e", true);
   xhttp.send();
-  }, 3000 ) ;
+  }, 500 ) ;
   var chartH = new Highcharts.Chart({
   chart:{ renderTo:'chart-posicion' },
   title: { text: 'POSICION CARRO' },
