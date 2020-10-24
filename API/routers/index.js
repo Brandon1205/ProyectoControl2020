@@ -2,13 +2,18 @@
 const express = require("express");
 //importar Router Express
 const router = express.Router();
+const path = require('path');
+
 //importamos controlador
 const controladorCarro = require("../controllers/controladorCarro");
 //Exportamos router
 module.exports = function() {
     //Obtener datos
+    // router.get("/", function(req, res, next) { //creamos pagina
+    //     res.render("index");
+    // });
     router.get("/", function(req, res, next) { //creamos pagina
-        res.render("index");
+        res.sendFile(path.join(__dirname, '../views/home/index.html'));
     });
     //Agrega modelo de los datos
     router.post("/datos", controladorCarro.crearDato);
