@@ -19,6 +19,7 @@
     <h2>ROBOT TRACCIÓN DIFERENCIAL</h2>
     <div id="chart-velocidad_lineal" class="container"></div>
     <div id="chart-posicion" class="container"></div>
+    <div id="chart-trayectoria" class="container"></div>
   </body>
   <script>
   var chartT = new Highcharts.Chart({
@@ -60,7 +61,7 @@
     };
     xhttp.open("GET", "/datos/5f84ecaebaa34d00173d845e", true);
     xhttp.send();
-  }, 500 ) ;
+  }, 500 );
   
   var chartH = new Highcharts.Chart({
     chart:{ renderTo:'chart-posicion' },
@@ -114,6 +115,51 @@
     };
     xhttp.open("GET", "/datos/5f84ecaebaa34d00173d845e", true);
     xhttp.send();
-  }, 500 ) ;
+  }, 500 );
+
+  var chartH = new Highcharts.Chart({
+    chart:{ renderTo:'chart-trayectoria' },
+    title: { text: 'TRAYECTORIA CARRO' },
+    series: [{
+    showInLegend: false,
+    data: []
+    },{
+        showInLegend: false,
+    data: []
+    }],
+    plotOptions: {
+      line: { animation: false,
+        dataLabels: { enabled: true }
+      }
+    },
+    xAxis: {
+      type: 'datetime',
+      dateTimeLabelFormats: { second: '%H:%M:%S' }
+    },
+    yAxis: {
+      title: { text: 'Posicion XY' }
+    },
+    credits: { enabled: false }
+  });
+  setInterval(function ( ) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        const posicionX = JSON.parse(this.response).posicionX;
+        const posicionY= JSON.parse(this.response).posicionY;
+        var x = parseFloat(posicionX),
+        y = parseFloat(posicionY);
+
+        //console.log(this.responseText);
+        if(chartH.series[0].data.length > 40) {
+            chartH.series[0].addPoint([x, y], true, true, true);
+        } else {
+            chartH.series[0].addPoint([x, y], true, false, true);
+        }
+      }
+    };
+    xhttp.open("GET", "/datos/5f84ecaebaa34d00173d845e", true);
+    xhttp.send();
+  }, 500 );
   </script>
   </html>
